@@ -1,0 +1,27 @@
+Read and Write the eeprom of an fx2 chip with the vend_ax.hex firmware
+
+
+COMPILE
+-------
+- Install libusb-dev or libusb-1.0-0-dev (rPI) on your system.
+- (Optional) Install fxload
+- Run make
+
+
+USE
+---
+1) Mount the usbfs
+mount -t usbfs usbfs /proc/bus/usb
+
+2) Download the fw
+fxload -I vend_ax.hex  -D /proc/bus/usb/002/011  -t fx2 -v
+
+3) Run fx2eeprom
+3a)Read example
+./fx2eeprom r 0x123 0x234 45 > eeprom.raw
+3b)Write example
+cat eeprom.raw | ./fxeeprom w 0x123 0x234 45 > eeprom.raw
+
+
+
+vend_ax.hex came is property of Cypress

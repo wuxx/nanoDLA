@@ -1,0 +1,240 @@
+.\" fxload.8
+.\" Created: Fri Dec 28 2001 by David Brownell
+.\" Copyright (c) 2001-2002 David Brownell <dbrownell@users.sourceforge.net>
+.\" Copyright (c) 2008 Roger Williams <rawqux@users.sourceforge.net>
+.\" 
+.\" Permission is granted to make and distribute verbatim copies of this
+.\" manual provided the copyright notice and this permission notice are
+.\" preserved on all copies.
+.\" 
+.\" Permission is granted to copy and distribute modified versions of this
+.\" manual under the conditions for verbatim copying, provided that the
+.\" entire resulting derived work is distributed under the terms of a
+.\" permission notice identical to this one
+.\" 
+.\" Since the Linux kernel and libraries are constantly changing, this
+.\" manual page may be incorrect or out-of-date.  The author(s) assume no
+.\" responsibility for errors or omissions, or for damages resulting from
+.\" the use of the information contained herein.  The author(s) may not
+.\" have taken the same level of care in the production of this manual,
+.\" which is licensed free of charge, as they might when working
+.\" professionally.
+.\" 
+.\" Formatted or processed versions of this manual, if unaccompanied by
+.\" the source, must acknowledge the copyright and authors of this work.
+.\" 
+.TH FXLOAD 8 "September 2008" "" "Linux Programmer's Manual"
+.SH "NAME"
+fxload \- Firmware download to EZ-USB devices
+.SH "SYNOPSIS"
+.B fxload
+.BI "[ \-v ]"
+.BI "[ \-l ]"
+.BI "[ \-D " devpath " ]"
+.BI "[ \-I " hexfile " ]"
+.BI "[ \-t " type " ]"
+.BI "[ \-c " config " ]"
+.BI "[ \-s " loader " ]"
+.br
+.B fxload
+.BI "[ \-D " devpath " ]"
+.BI "[ \-L " link " ]"
+.BI "[ \-m " mode " ]"
+.br
+.B fxload
+.BI "[ \-V ]"
+.SH "DESCRIPTION"
+.B fxload
+is a program which downloads firmware to USB devices based on
+AnchorChips EZ-USB, Cypress EZ-USB FX,
+or Cypress EZ-USB FX2/FX2LP microcontrollers.
+These have 8-bit 8051 cores with special extensions for USB I/O.
+The FX2 supports high speed USB 2.0 transfers (480 Mbit/sec)
+as well as full speed USB 1.1 transfers (12 Mbit/sec),
+while the earlier parts supports only full speed transfers.
+These controllers have several package options,
+and can be set up with external memory (on-chip memory is
+usually 8K or 16K), EEPROMs, and ROMs when device costs allow.
+.PP
+This uses "usbfs" (older name:  "usbdevfs") to access
+devices, and issues vendor specific control requests
+to download and reset the EZ-USB devices.
+Normally, firmware will then "renumerate" by disconnecting from
+USB and then reconnecting as a new device.
+It then appears with new device descriptors and functionality,
+as provided by the firmware which has been downloaded.
+.PP
+To support some non-firmware applications, this can also set
+up symbolic links for those usbfs names.
+It can also change their access modes.
+Both of these can help simplify software applications that
+need to talk to USB devices using user mode drivers,
+don't want to run with privileges or to examine all of the
+existing USB devices,
+and which don't need more kernel drivers.
+.PP
+See the
+.I Linux-Hotplug
+web site for information about how to use
+.B fxload
+to download device firmware when hotplugging USB devices,
+using driver-specific scripts stored in the
+.I /etc/hotplug/usb
+directory.
+.SH "FUNCTION LETTERS"
+At least one of the following options must be specified.
+Note that as usual with UNIX and Linux commands,
+the order of command option flags does not matter.
+You may use these in any order.
+.TP
+.BI "\-I " hexfile
+Downloads the specified firmware file.
+This firmware is provided in standard Intel hexfile format.
+(Common naming conventions include
+.I *.hex
+and
+.IR *.ihx .)
+Depending on the device and firmware in use, the
+.B \-s
+option may also be necessary to specify a second stage loader.
+Firmware is normally downloaded to RAM and executed, but there
+is also an option for downloading into bootable I2C EEPROMs.
+.TP
+.BI "\-L " link
+Creates the specified symbolic link to the usbfs device path.
+This would typically be used to create a name in a directory
+that would be searched by an application.
+The symlink would be removed by some other component on device unplug.
+.TP
+.BI "\-m " mode
+Changes permissions on the "usbfs" device node.
+By default, those nodes are only accessible by privileged
+users, which doesn't help when the user mode device driver
+needs to run without root privileges.
+Note that usbfs mount options like
+.I devmode=0666
+are also available.
+.TP
+.B "\-V"
+Identifies the version of fxload being invoked, and exits
+without performing other actions.
+.PP
+Note that when downloading firmware that renumerates,
+there's no point in changing the device permissions
+or creating a symbolic link.
+.SH "OPTIONS"
+By default,
+.B fxload
+assumes the device uses an EZ-USB or EZ-USB FX.
+It also assumes that the device in question has been specified
+by USB kernel hotplugging conventions, using the
+.I DEVICE
+environment variable to name a "usbfs"
+file that can be used to talk to the device.
+.TP
+.BI "\-c " config
+Indicates the specified firmware should be downloaded to an
+I2C boot EEPROM rather than to RAM.
+The parameter is the EZ-USB FX or FX2 configuration byte,
+and for AnchorChips devices the value should be zero.
+This requires a second stage loader (e.g. vend_ax.hex) that knows
+how to write to I2C EEPROMs specified using the
+.B \-s
+option, as well as a device that's provided with an EEPROM
+large enough to store the boot firmware.
+After downloading to a device's EEPROM,
+you should retest it starting from power off.
+.TP
+.BI "\-s " loader
+This identifies the hex file holding a second stage loader
+(in the same hex file format as the firmware itself),
+which is loaded into internal memory.
+This loader understands additional vendor control requests,
+beyond the one built into all EZ-USB hardware,
+which are needed to write external RAM or EEPROM.
+As a last step when loading firmware,
+.B fxload
+normally overwrites this second stage loader
+with parts of the firmware residing on-chip.
+.TP
+.BI "\-t " type
+Indicates which type of microcontroller is used in the device;
+type may be one of
+.I an21
+(the original AnchorChips devices),
+.I fx
+(Cypress' updated version, the EZ-USB FX), or
+.I fx2
+(the Cypress EZ-USB FX2, supporting high speed transfers), or
+.I fx2lp
+(the Cypress EZ-USB FX2LP, with 16KB internal RAM).
+Except when writing to EEPROM, all that normally matters when
+downloading firmware is whether or not the device uses an FX2.
+.TP
+.B "\-v"
+Prints some diagnostics, such as download addresses and sizes,
+to standard error.  Repeat the flag
+.RB ( -vv ", " -vvv )
+to get more diagnostics.
+.TP
+.B "\-l"
+print error and verbose messages to syslog.
+.TP
+.BI "\-D " devpath
+Specifies the "usbfs" path name for the device in question,
+such as
+.IR /proc/bus/usb/004/080 .
+This takes precedence over any
+.I DEVICE
+environment variable that may be set.
+.SH "NOTES"
+.PP
+This program implements one extension to the standard "hex file" format.
+Lines beginning with a "#" character are ignored, and may be used to
+hold copyright statements and other information.
+Other tools may not handle hexfiles using this extension.
+.PP
+At this writing, "usbfs" is a kernel configuration option.
+That means that device drivers relying on user mode firmware
+downloading may need to depend on that kernel configuration option.
+A less preferable alternative involves compiling the firmware
+into the kernel and managing downloads and renumeration there.
+This is less preferable in part because much device firmware is
+provided with GPL-incompatible licensing, and in part because
+storing such firmware firmware wastes kernel memory.
+.PP
+For EZ-USB family devices, the hardware's first stage loader
+(supporting the 0xA0 vendor request) can't write into external memory.
+Configurations that put firmware into external memory thus need a
+second stage loader.
+For typical "flat" memory architectures, a loader supporting the 0xA3
+vendor request is used to write into that memory.
+Similarly, a second stage loader that supports the 0xA2 vendor request
+is needed when writing boot firmware into an I2C EEPROM.
+These 0xA2 and 0xA3 vendor commands are conventions defined by Cypress.
+Devices that use bank switching or similar mechanisms to stretch the
+64KByte address space may need different approach to loading firmware.
+.PP
+Not all devices support EEPROM updates.
+Some EZ-USB based devices don't have an I2C EEPROM;
+many such EEPROMs are too small to store firmware;
+and some firmware can't be placed in bootable I2C EEPROMs.
+.SH "ENVIRONMENT VARIABLES"
+.TP
+.B DEVICE
+normally names a "usbfs" file that will be used to talk to the device.
+This is provided by the Linux kernel as part of USB hotplugging.
+.SH "FILES"
+.TP
+.I /usr/share/usb/a3load.hex
+Second stage loader that works with AnchorChips EZ-USB,
+Cypress EZ-USB FX, and Cypress EZ-USB FX2.
+Note that this only supports the 0xA3 vendor command, to
+write external memory.
+A loader that also supports the 0xA2 command, to write boot EEPROMs,
+is included with Cypress developer kits.
+.SH "SEE ALSO"
+.BR hotplug "(8) "
+.SH "AUTHORS"
+Linux Hotplugging Project
+.I http://linux-hotplug.sourceforge.net/
