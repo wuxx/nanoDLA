@@ -48,7 +48,7 @@ PulseView使用上比较简单，在下方菜单栏中配置采样数据大小�
 ![pulseview3](https://github.com/wuxx/nanoDLA/blob/master/doc/pulseview3.png)
 
 ## 协议解析
-PulseView支持百余种协议解析，采样到有效数据之后，点击菜单栏协议解析图片，在右侧窗口中选择具体的协议，点击左侧出现的协议，对协议进行具体的配置，例如以下是解析uart的例子，需要配置uart的波特率，数据奇偶校验，停止位等，配置好之后，PulseView便能解析出可视化的数据以供分析，如图所示
+PulseView支持百余种协议解析，采样到有效数据之后，点击菜单栏协议解析图标，在右侧窗口中选择具体的协议，点击左侧出现的协议，对协议进行具体的配置，例如以下是解析uart的例子，需要配置uart的波特率，数据奇偶校验，停止位等，配置好之后，PulseView便能解析出可视化的数据以供分析，如图所示
 ![pulseview_decode](https://github.com/wuxx/nanoDLA/blob/master/doc/pulseview_decode.png)
 
 
