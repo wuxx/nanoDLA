@@ -28,13 +28,13 @@ nanoDLA 是MuseLab推出硬件软件以及上位机均开源的逻辑分析仪�
 ## 驱动安装
 插入nanoDLA，此时会设备管理器中识别出未知设备，如图所示
 ![usb_device_unknown](https://github.com/wuxx/nanoDLA/blob/master/doc/usb_device_unknown.png)  
----
+  
 在开始栏中搜索zadig并打开  
 ![zadig_search](https://github.com/wuxx/nanoDLA/blob/master/doc/zadig_search.png)  
----
+  
 选择Options->List All Devices，上方选择对应nanoDLA的Unknown Device（USB ID为 1D50:608C），下方在驱动栏选择WinUSB驱动，点击Install Driver安装驱动即可，稍等片刻，即可成功安装驱动。  
 ![zadig_install1](https://github.com/wuxx/nanoDLA/blob/master/doc/zadig_install1.png)  
----
+  
 成功安装驱动后，设备可在被正常识别（尽管名字仍然为Unknown Device，然而已经被系统正常识别了）  
 ![usb_device_default](https://github.com/wuxx/nanoDLA/blob/master/doc/usb_device_default.png)
 
@@ -43,7 +43,7 @@ nanoDLA 是MuseLab推出硬件软件以及上位机均开源的逻辑分析仪�
 ![usb_device_default](https://github.com/wuxx/nanoDLA/blob/master/doc/usb_device_fx2lafw.png)
 PulseView使用上比较简单，在下方菜单栏中配置采样数据大小和采样率，点击左上角run按钮，即可开始采样，对于nanoDLA，最高可配置24Mhz的采样率进行工作，8通道同时进行工作
 ![pulseview2](https://github.com/wuxx/nanoDLA/blob/master/doc/pulseview2.png)
----
+  
 ![pulseview3](https://github.com/wuxx/nanoDLA/blob/master/doc/pulseview3.png)
 
 
