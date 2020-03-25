@@ -54,7 +54,7 @@ PulseView支持百余种协议解析，采样到有效数据之后，点击菜�
 
 # FAQ
 ### Q: 如何自行烧写固件？  
-nanoDLA使用的是cypress的FX2系列芯片CY7C68013A，固件存放在外置的EEPROM中，芯片支持两种启动模式C0和C2，C0模式只需在EEPROM存放8个配置字节，启动之后由上位机将最终的固件送入至FX2内部SRAM中执行，C2模式则是将固件直接存放至EEPROM中，无需外部再传入固件。目前nanoDLA采用的是C0模式，只需烧录8个字节即可，具体步骤如下：  
+nanoDLA使用的是cypress的FX2系列芯片CY7C68013A，固件存放在外置的EEPROM中，芯片支持两种启动模式C0和C2，C0模式只需在EEPROM存放8个配置字节，启动之后由上位机将最终的固件送入至FX2内部SRAM中执行，C2模式则是将固件直接存放至EEPROM中，无需外部再传入固件。目前nanoDLA采用的是C0模式（C0模式的好处是设备永远不会变砖，可随意烧录测试），只需烧录8个字节即可，具体步骤如下：  
 `cd tools && source ./env.sh && cd fx2eeprom`  
 `make load && make write_fx2lafw`  
 具体请查看Makefile，可自行修改成不同的固件以适配其他上位机（如saleae）
