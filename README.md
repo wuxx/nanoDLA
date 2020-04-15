@@ -60,9 +60,9 @@ PulseView支持百余种协议解析，采样到有效数据之后，点击菜�
 ### Q: 支持哪些协议解析？  
 支持协议列表点击[此处](https://github.com/wuxx/nanoDLA/blob/master/decoder_list.md)查看
 ### Q: 为何采样会失败？  
-由于nanoDLA的USB工作在USB 2.0 高速模式下，带宽需求较高，假若您接在hub上进行工作，hub的质量可能无法支撑这么高的带宽需求（尤其是hub上又接了其他USB设备时），可以尝试直接接插在PC的USB上进行工作，一般均可解决。另外，部分windows系统无法支持24Mhz的采样率进行工作（和windows WinUSB策略有关，暂时没有很好解决方法），可尝试使用16Mhz采样率采样工作。
+由于nanoDLA的USB工作在USB 2.0 高速模式下，带宽需求较高，假若您接在hub上进行工作，hub的质量可能无法支撑这么高的带宽需求（尤其是hub上又接了其他USB设备时），可以尝试直接接插在PC的USB上进行工作，一般均可解决。
 ### Q: 为何无法以最大采样率采样？
-少部分windows系统可能无法以最大采样率24Mhz正常采样工作，具体表现为只能采样几百ms便停止采样，此问题与windows上的WinUSB驱动策略有关系，sigrok社区中有此问题的[bug-573](https://sigrok.org/bugzilla/show_bug.cgi?id=573)讨论。然而遗憾的是，目前最新代码仍然存在此问题，临时的规避方法是使用一个较低的采样率如16Mhz进行工作，此问题实验室会继续跟踪，希望能在未来的时间解决。
+少部分windows系统可能无法以最大采样率24Mhz正常采样工作，具体表现为只能采样几百ms便停止采样，此问题与windows上的WinUSB驱动策略有关系，sigrok社区中有此问题的[bug-573](https://sigrok.org/bugzilla/show_bug.cgi?id=573)讨论。然而遗憾的是，目前最新的软件存在此问题，临时的规避方法是使用一个较低的采样率如16Mhz进行工作，此问题实验室会继续跟踪，希望能在未来的时间解决。
 ### Q: 如何自行烧写固件？  
 nanoDLA使用的是cypress的FX2系列芯片CY7C68013A，固件存放在外置的EEPROM中，芯片支持两种启动模式C0和C2，C0模式只需在EEPROM存放8个配置字节，启动之后由上位机将最终的固件送入至FX2内部SRAM中执行，C2模式则是将固件直接存放至EEPROM中，无需外部再传入固件。目前nanoDLA采用的是C0模式（C0模式的好处是设备永远不会变砖，可随意烧录测试），只需烧录8个字节即可，具体步骤如下：  
 `cd tools && source ./env.sh && cd fx2eeprom`  
