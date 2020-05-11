@@ -1,11 +1,12 @@
 # nanoDLA 用户手册
 * [产品介绍](#产品介绍) 
 * [产品特点](#产品特点)
-* [软件使用](#软件使用)
+* [软件使用](#软件安装使用)
     * [PulseView安装](#pulseview安装)
     * [驱动安装](#驱动安装)
-    * [PulseView使用](#pulseview安装)
+    * [PulseView使用](#pulseview使用)
     * [协议解析](#协议解析)
+* [产品链接](#产品链接)
 * [FAQ](#faq)
     * [支持哪些协议解析？](#q-支持哪些协议解析) 
     * [为何采样会失败？](#q-为何采样会失败) 
@@ -55,6 +56,8 @@ PulseView使用上比较简单，在下方菜单栏中配置采样数据大小�
 PulseView支持百余种协议解析，采样到有效数据之后，点击菜单栏协议解析图标，在右侧窗口中选择具体的协议，点击左侧出现的协议，对协议进行具体的配置，例如以下是解析uart的例子，需要配置uart的波特率，数据奇偶校验，停止位等，配置好之后，PulseView便能解析出可视化的数据以供分析，如图所示
 ![pulseview_decode](https://github.com/wuxx/nanoDLA/blob/master/doc/pulseview_decode.png)
 
+# 产品链接
+[nanoDLA开源逻辑分析仪](https://item.taobao.com/item.htm?spm=a230r.1.14.10.331a393eoPAZ69&id=615057644660&ns=1&abbucket=11#detail)
 
 # FAQ
 ### Q: 支持哪些协议解析？  
