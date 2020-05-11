@@ -57,7 +57,7 @@ PulseView支持百余种协议解析，采样到有效数据之后，点击菜�
 ![pulseview_decode](https://github.com/wuxx/nanoDLA/blob/master/doc/pulseview_decode.png)
 
 # 产品链接
-[nanoDLA开源逻辑分析仪](https://item.taobao.com/item.htm?spm=a230r.1.14.10.331a393eoPAZ69&id=615057644660&ns=1&abbucket=11#detail)
+[nanoDLA开源逻辑分析仪](https://item.taobao.com/item.htm?spm=a230r.1.14.4.331a393eoPAZ69&id=614150181233&ns=1&abbucket=11#detail)
 
 # FAQ
 ### Q: 支持哪些协议解析？  
