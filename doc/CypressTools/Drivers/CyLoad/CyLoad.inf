@@ -1,0 +1,95 @@
+; Sample INF file for performing EZ-USB Firmware download using
+; the scripting feature of the Cypress Generic USB Driver.
+; Consult the EZ-USB DVK Users Guide for intructions on customizing
+; this file for your device.
+
+[Version]
+Signature="$CHICAGO$"
+Class=USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+provider=%YourCompany%
+
+
+[SourceDisksNames]
+1=%Cyload_INSTALL%,,,
+
+[SourceDisksFiles]
+CyLoadME.sys = 1
+CyLoad.sys = 1
+%CyLoad.SCRIPTFILE% = 1
+
+[Manufacturer]
+%MfgName%=YourCompany
+
+[YourCompany]
+%DeviceDesc%=CyLoad, USB\VID_04B4&PID_0084
+
+[DestinationDirs]
+CyLoadME.Files = 10,System32\Drivers
+CyLoad.Files = 10,System32\Drivers
+CyLoadFW.Files = 10,System32\CyLoad
+
+[CyLoad]
+CopyFiles=CyLoadME.Files
+CopyFiles=CyLoadFW.Files
+AddReg=CyLoadME.AddReg
+
+[CyLoad.HW]
+AddReg=CyLoad.AddReg.Guid
+
+[CyLoad.NT]
+CopyFiles=CyLoad.Files
+CopyFiles=CyLoadFW.Files
+AddReg=CyLoad.AddReg
+
+[CyLoad.NT.HW]
+AddReg=CyLoad.AddReg.Guid
+
+[CyLoad.NT.Services]
+Addservice = CyLoad, 0x00000002, CyLoad.AddService
+
+[CyLoad.AddService]
+DisplayName    = %CyLoad.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\CyLoad.sys
+LoadOrderGroup = Base
+
+[CyLoadME.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,CyLoadME.sys
+
+[CyLoad.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,CyLoad.sys
+
+[CyLoadME.Files]
+CyLoadME.sys
+
+[CyLoad.Files]
+CyLoad.sys
+
+[CyLoadFW.Files]
+%CyLoad.SCRIPTFILE%
+
+[CyLoad.AddReg.Guid]
+HKR,,DriverGUID,,%CyLoad.GUID%
+HKR,,DriverEXECSCRIPT,,%CyLoad.SCRIPTDIR%%CyLoad.SCRIPTFILE%
+
+;------------------------------------------------------------;
+
+[Strings]
+YourCompany       = "YourCompany"
+MfgName           = "YourCompany"
+
+;------------Replace GUID below with custom GUID (generated with GuidGen)------------;
+CyLoad.GUID       = "{259E1A84-51FE-4c77-9A7F-894904D6D7C3}"
+
+CyLoad.SCRIPTDIR  = "\systemroot\system32\CyLoad\"
+CyLoad.SCRIPTFILE = "CyLoad.spt"
+
+;------------MOdify these strings to match your device-------------------------------;
+CyLoad_INSTALL    = "Your Device Installation Disk"
+DeviceDesc        = "Your Device Firmware Download"
+CyLoad.SvcDesc    = "Your Device Download Driver"

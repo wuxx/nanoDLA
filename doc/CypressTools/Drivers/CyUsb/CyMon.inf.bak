@@ -1,0 +1,99 @@
+; Installation INF for the Cypress DevKit Driver for Windows ME/2000/XP
+; This inf file is set up to download the Keil debug monitor to the 
+; EZ-USB FX2LP and FX1 development boards.
+
+[Version]
+Signature="$CHICAGO$"
+Class=USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+provider=%CYPRESS%
+
+
+[SourceDisksNames]
+1=%CyMon_INSTALL%,,,
+
+[SourceDisksFiles]
+CyDevME.sys = 1
+CyDev.sys = 1
+%CyMon.SCRIPTFILE% = 1
+
+[Manufacturer]
+%MfgName%=Cypress
+
+[Cypress]
+%VID_04B4&PID_0082.DeviceDesc%=CyMon, USB\VID_04B4&PID_0082
+%VID_04B4&PID_0083.DeviceDesc%=CyMon, USB\VID_04B4&PID_0083
+
+;[PreCopySection]
+;HKR,,NoSetupUI,,1
+
+[DestinationDirs]
+CyMonME.Files = 10,System32\Drivers
+CyMon.Files = 10,System32\Drivers
+CyMonFW.Files = 10,System32\CyMon
+
+[CyMon]
+CopyFiles=CyMonME.Files
+CopyFiles=CyMonFW.Files
+AddReg=CyMonME.AddReg
+
+[CyMon.HW]
+AddReg=CyMon.AddReg.Guid
+
+[CyMon.NT]
+CopyFiles=CyMon.Files
+CopyFiles=CyMonFW.Files
+AddReg=CyMon.AddReg
+
+[CyMon.NT.HW]
+AddReg=CyMon.AddReg.Guid
+
+[CyMon.NT.Services]
+Addservice = CyMon, 0x00000002, CyMon.AddService
+
+[CyMon.AddService]
+DisplayName    = %CyMon.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\CyUsb.sys
+LoadOrderGroup = Base
+
+[CyMonME.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,CyUsbME.sys
+
+[CyMon.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,CyUsb.sys
+
+[CyMonME.Files]
+CyUsbME.sys
+
+[CyMon.Files]
+CyUsb.sys
+
+[CyMonFW.Files]
+%CyMon.SCRIPTFILE%
+
+[CyMon.AddReg.Guid]
+;HKR,,DriverGUID,,%CyMon.GUID%
+HKR,,DriverEXECSCRIPT,,%CyMon.SCRIPTDIR%%CyMon.SCRIPTFILE%
+
+;------------------------------------------------------------;
+
+[Strings]
+CYPRESS="Cypress"
+MfgName="Cypress"
+CyMon_INSTALL="Cypress DevKit Driver Installation Disk"
+VID_04B4&PID_0082.DeviceDesc="EZ-USB Advanced Development Board FX2LP (Keil monitor)"
+VID_04B4&PID_0083.DeviceDesc="EZ-USB Advanced Development Board FX1 (Keil monitor)"
+CyMon.SvcDesc="Cypress Generic USB Driver Keil Monitor"
+
+;------------Replace GUID below with custom GUID-------------;
+;CyMon.GUID="{AE18AA60-7F6A-11d4-97DD-00010229B959}"
+;------------------------------------------------------------;
+
+
+CyMon.SCRIPTDIR="\systemroot\system32\CyMon\"
+CyMon.SCRIPTFILE="mon.spt"

@@ -1,0 +1,139 @@
+[Version]
+Signature="$CHICAGO$"
+Class=USB
+provider=%Cypress%
+LayoutFile=layout.inf
+
+[Manufacturer]
+%Cypress%=Cypress
+
+[Cypress]
+;
+; This is the VID/PID for the EZ-USB development board.  This device
+; is bound to a version of the general purpose driver that will
+; automatically download the Keil 8051 monitor to external RAM.
+; Do not use this VID/PID for your own device or the monitor will
+; wipe out your firmware.
+;
+%USB\VID_0547&PID_0080.DeviceDesc%=EZUSBDEV.Dev, USB\VID_0547&PID_0080
+%USB\VID_04B4&PID_0081.DeviceDesc%=EZUSBDEV.Dev, USB\VID_04B4&PID_0081
+
+;
+; This VID/PID is used by several of the EZ-USB development kit
+; samples.  This device is bound to the general purpose driver.
+;
+%USB\VID_0547&PID_1002.DeviceDesc%=EZUSB.Dev, USB\VID_0547&PID_1002
+
+;
+; The folowing PIDs are for all of the devices in the EZ-USB family.
+; These are the hardcoded PIDs that will be reported by an EZ-USB
+; device with no external EEPROM. Bound to the general purpose driver.
+;
+%USB\VID_0547&PID_2131.DeviceDesc%=EZUSB.Dev, USB\VID_0547&PID_2131
+%USB\VID_0547&PID_2126.DeviceDesc%=EZUSB.Dev, USB\VID_0547&PID_2126
+%USB\VID_0547&PID_2125.DeviceDesc%=EZUSB.Dev, USB\VID_0547&PID_2125
+%USB\VID_0547&PID_2136.DeviceDesc%=EZUSB.Dev, USB\VID_0547&PID_2136
+%USB\VID_0547&PID_2122.DeviceDesc%=EZUSB.Dev, USB\VID_0547&PID_2122
+
+; EZ-USB FX
+%USB\VID_0547&PID_2235.DeviceDesc%=EZUSB.Dev, USB\VID_0547&PID_2235
+%USB\VID_0547&PID_2236.DeviceDesc%=EZUSB.Dev, USB\VID_0547&PID_2236
+%USB\VID_0547&PID_2225.DeviceDesc%=EZUSB.Dev, USB\VID_0547&PID_2225
+%USB\VID_0547&PID_2226.DeviceDesc%=EZUSB.Dev, USB\VID_0547&PID_2226
+
+; EZ-USB FX2
+%USB\VID_04B4&PID_8613.DeviceDesc%=EZUSB.Dev, USB\VID_04B4&PID_8613
+%USB\VID_04B4&PID_1002.DeviceDesc%=EZUSB.Dev, USB\VID_04B4&PID_1002
+
+[PreCopySection]
+HKR,,NoSetupUI,,1
+
+[DestinationDirs]
+EZUSB.Files.Ext = 10,System32\Drivers
+EZUSB.Files.Inf = 10,INF
+EZUSBDEV.Files.Ext = 10,System32\Drivers
+EZUSBDEV.Files.Inf = 10,INF
+
+[EZUSB.Dev]
+CopyFiles=EZUSB.Files.Ext, EZUSB.Files.Inf
+AddReg=EZUSB.AddReg
+
+[EZUSB.Dev.NT]
+; copyfiles commented out for Win2K to avoid user intervention during install
+; CopyFiles=EZUSB.Files.Ext, EZUSB.Files.Inf
+AddReg=EZUSB.AddReg
+
+[EZUSB.Dev.NT.Services]
+Addservice = EZUSB, 0x00000002, EZUSB.AddService
+
+[EZUSB.AddService]
+DisplayName    = %EZUSB.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 2                  ; SERVICE_AUTO_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\ezusb.sys
+LoadOrderGroup = Base
+
+[EZUSB.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,ezusb.sys
+
+[EZUSB.Files.Ext]
+ezusb.sys
+
+[EZUSB.Files.Inf]
+ezusbw2k.Inf
+
+[EZUSBDEV.Dev]
+CopyFiles=EZUSBDEV.Files.Ext, EZUSBDEV.Files.Inf
+AddReg=EZUSBDEV.AddReg
+
+[EZUSBDEV.Dev.NT]
+; copyfiles commented out for Win2K to avoid user intervention during install
+; CopyFiles=EZUSBDEV.Files.Ext, EZUSBDEV.Files.Inf
+AddReg=EZUSBDEV.AddReg
+
+[EZUSBDEV.Dev.NT.Services]
+Addservice = EZUSBDEV, 0x00000002, EZUSBDEV.AddService
+
+[EZUSBDEV.AddService]
+DisplayName    = %EZUSBDEV.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 2                  ; SERVICE_AUTO_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\ezmon.sys
+LoadOrderGroup = Base
+
+[EZUSBDEV.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,ezmon.sys
+
+[EZUSBDEV.Files.Ext]
+ezmon.sys
+
+[EZUSBDEV.Files.Inf]
+ezusbw2k.Inf
+
+;---------------------------------------------------------------;
+
+[Strings]
+Cypress="Cypress Semiconductor"
+USB\VID_0547&PID_0080.DeviceDesc="Cypress EZ-USB Development Board"
+USB\VID_04B4&PID_0081.DeviceDesc="Cypress EZ-USB FX2 Development Board"
+USB\VID_0547&PID_1002.DeviceDesc="Cypress EZ-USB Sample Device"
+USB\VID_04B4&PID_1002.DeviceDesc="Cypress EZ-USB Sample Device"
+USB\VID_0547&PID_2131.DeviceDesc="Cypress EZ-USB (2131Q/2131S/2135S) - EEPROM missing"
+USB\VID_0547&PID_2126.DeviceDesc="Cypress EZ-USB (2126S) - EEPROM missing"
+USB\VID_0547&PID_2125.DeviceDesc="Cypress EZ-USB (2121S/2125S) - EEPROM missing"
+USB\VID_0547&PID_2136.DeviceDesc="Cypress EZ-USB (2136S) - EEPROM missing"
+USB\VID_0547&PID_2122.DeviceDesc="Cypress EZ-USB (2122S) - EEPROM missing"
+
+USB\VID_0547&PID_2235.DeviceDesc="Cypress EZ-USB (2235) - EEPROM missing"
+USB\VID_0547&PID_2236.DeviceDesc="Cypress EZ-USB (2236) - EEPROM missing"
+USB\VID_0547&PID_2225.DeviceDesc="Cypress EZ-USB (2225) - EEPROM missing"
+USB\VID_0547&PID_2226.DeviceDesc="Cypress EZ-USB (2226) - EEPROM missing"
+
+USB\VID_04B4&PID_8613.DeviceDesc="Cypress EZ-USB FX2 (68613) - EEPROM missing"
+
+EZUSB.SvcDesc="Cypress General Purpose USB Driver (ezusb.sys)"
+EZUSBDEV.SvcDesc="Cypress General Purpose USB Driver w/ Keil Monitor (ezmon.sys)"

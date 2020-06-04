@@ -1,0 +1,101 @@
+; CyUsbPre.inf
+; Installation INF for the Cypress Generic USB Driver for Windows 98ME/2000/XP
+;
+; This is a special version of the inf file that is pre-copied to the 
+; windows\inf directory as part of the DVK installation.  It is pre-copied
+; to avoid the need for user intervention when plugging in the devboard
+; for the first time.  In order for this to work, the "copyfiles" sections
+; of the INF file have been commented out.  As a result, this INF file
+; is not appropriate for plug-and-play installations.  That is, with
+; the copyfiles section commented out, Windows will not be able to copy
+; and load the driver (cyusb.sys) from removable media such as a floppy
+; or CD-ROM.  A version of this INF file that can be used for true
+; plug-and-play is located in the \cypress\usb\drivers\cyusb directory
+; 
+
+[Version]
+Signature="$CHICAGO$"
+Class=USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+provider=%PROVIDER%
+
+
+[SourceDisksNames]
+1=%CYUSB_INSTALL%,,,
+
+[SourceDisksFiles]
+CyUsbME.sys = 1
+CyUsb.sys = 1
+CyUsb.spd = 1
+
+[Manufacturer]
+%MFGNAME%=Cypress
+
+[Cypress]
+; Cypress FX2LP default ID
+%VID_04B4&PID_8613.DeviceDesc%=CyUsb, USB\VID_04B4&PID_8613
+
+; Cypress FX1 default ID
+%VID_04B4&PID_6473.DeviceDesc%=CyUsb, USB\VID_04B4&PID_6473
+
+; Cypress FX2LP Example Device.  DVK firmware examples use this VID/PID
+%VID_04B4&PID_1004.DeviceDesc%=CyUsb, USB\VID_04B4&PID_1004
+
+[DestinationDirs]
+CyUsbME.Files.Ext = 10,System32\Drivers
+CyUsb.Files.Ext = 10,System32\Drivers
+
+[CyUsb]
+CopyFiles=CyUsb.Files.Ext
+AddReg=CyUsbME.AddReg
+
+[CyUsb.HW]
+AddReg=CyUsb.AddReg.Guid
+
+[CyUsb.NT]
+CopyFiles=CyUsb.Files.Ext
+AddReg=CyUsb.AddReg
+
+[CyUsb.NT.HW]
+AddReg=CyUsb.AddReg.Guid
+
+[CyUsb.NT.Services]
+Addservice = CyUsb, 0x00000002, CyUsb.AddService
+
+[CyUsb.AddService]
+DisplayName    = %CyUsb.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\CyUsb.sys
+LoadOrderGroup = Base
+
+[CyUsbME.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,CyUsbME.sys
+
+[CyUsb.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,CyUsb.sys
+
+[CyUsbME.Files.Ext]
+CyUsbME.sys
+
+[CyUsb.Files.Ext]
+CyUsb.sys
+
+[CyUsb.AddReg.Guid]
+;HKR,,DriverGUID,,%CyUsb.GUID%
+
+;---------------------------------------------------------------;
+
+[Strings]
+PROVIDER="Cypress"
+MFGNAME="Cypress"
+CYUSB_INSTALL="Cypress Generic USB Driver Installation Disk"
+VID_04B4&PID_8613.DeviceDesc="Cypress EZ-USB FX2LP - EEPROM missing"
+VID_04B4&PID_6473.DeviceDesc="Cypress EZ-USB FX1 - EEPROM missing"
+VID_04B4&PID_1004.DeviceDesc="Cypress EZ-USB Example Device"
+CyUsb.SvcDesc="Cypress Generic USB Driver"
+
+;CyUsb.GUID="{AE18AA60-7F6A-11d4-97DD-00010229B959}"
