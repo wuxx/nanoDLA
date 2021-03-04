@@ -9,7 +9,10 @@
 * [FAQ](#faq)
 # nanoDLA Introduction
 nanoDLA is a hardware and software open source logic analyzer developed and produced by Muse Lab. It is exquisite and compact in appearance with rich functions. It supports up to 24Mhz sampling rate and more than 100 kinds of protocol analysis. 8 channels can sample data simultaneously. Efficiency could be greatly improved in scenarios such as problem location, complex systems with multiple components, timing analysis and performance analysis.
-![nanoDLA](https://github.com/wuxx/nanoDLA/blob/master/doc/nanoDLA_400x400.jpg)
+<div align=center>
+<img src="https://github.com/wuxx/nanoDLA/blob/master/doc/nanoDLA.jpg" width = "700" alt="" align=center />
+</div>
+
 
 # Features
 - Open source software
