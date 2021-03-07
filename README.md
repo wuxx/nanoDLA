@@ -31,7 +31,7 @@ nanoDLA 是MuseLab推出硬件软件以及上位机均开源的逻辑分析仪�
 # 软件安装使用
 在正常使用nanoDLA前，您需要为其手动安装驱动以被PulseView识别，只需先安装PulseView，然后使用PulseView自带的Zadig工具来进行安装驱动即可，具体步骤如下
 ## PulseView安装
-本仓库的software目录下含有PulseView安装可执行文件，只需双击安装文件，连续点击下一步即可安装，在此不再赘述。
+本仓库的software目录下含有PulseView安装可执行文件，只需双击安装文件，连续点击下一步即可安装，在此不再赘述。  
 ![pulseview](https://github.com/wuxx/nanoDLA/blob/master/doc/pulseview.png)
 
 ## 驱动安装
@@ -44,11 +44,11 @@ nanoDLA 是MuseLab推出硬件软件以及上位机均开源的逻辑分析仪�
 选择Options->List All Devices，上方选择对应nanoDLA的fx2lafw（USB ID为 1D50:608C），下方在驱动栏选择WinUSB驱动，点击Install Driver安装驱动即可，稍等片刻，即可成功安装驱动。  
 ![zadig_install1](https://github.com/wuxx/nanoDLA/blob/master/doc/zadig_install1_v1.2.png)  
   
-成功安装驱动后，设备可在被正常识别
+成功安装驱动后，设备可被正常识别
 ![usb_device_default](https://github.com/wuxx/nanoDLA/blob/master/doc/usb_device_default_v1.2.png)
 
 ## PulseView使用
-将nanoDLA插入PC中，然后打开PulseView，PulseView启动后，会重新对nanoDLA进行USB枚举配置，设备名也重新枚举为fx2lafw，如图所示
+将nanoDLA插入PC中，然后打开PulseView，PulseView启动后，会自动搜索并打开fx2lafw设备，如图所示
 ![usb_device_default](https://github.com/wuxx/nanoDLA/blob/master/doc/usb_device_fx2lafw.png)
 PulseView使用上比较简单，在下方菜单栏中配置采样数据大小和采样率，点击左上角run按钮，即可开始采样，对于nanoDLA，最高可配置24Mhz的采样率进行工作，8通道同时进行工作
 ![pulseview2](https://github.com/wuxx/nanoDLA/blob/master/doc/pulseview2.png)
