@@ -17,6 +17,7 @@
 nanoDLA 是MuseLab推出硬件软件以及上位机均开源的逻辑分析仪，外观精致小巧，功能丰富，价格低廉，最高可支持24Mhz采样率，同时支持百余种协议解析。可以较好的满足电子工程师日常的开发调试需求，在问题定位、多组件的复杂系统、时序分析、性能分析等场景可以大大提升开发效率。  
 <div align=center>
 <img src="https://github.com/wuxx/nanoDLA/blob/master/doc/nanoDLA.jpg" width = "700" alt="" align=center />
+<img src="https://github.com/wuxx/nanoDLA/blob/master/doc/nanoDLA-TYPE-C.jpg" width = "500" alt="" align=center />
 </div>
 
 
