@@ -6,11 +6,13 @@
     * [Install Driver](#install-driver)
     * [Run PulseView](#run-pulseview)
     * [Protocol Decode](#protocol-decode)
+* [How to Buy](#how-to-buy)
 * [FAQ](#faq)
 # nanoDLA Introduction
 nanoDLA is a hardware and software open source logic analyzer developed and produced by Muse Lab. It is exquisite and compact in appearance with rich functions. It supports up to 24Mhz sampling rate and more than 100 kinds of protocol analysis. 8 channels can sample data simultaneously. Efficiency could be greatly improved in scenarios such as problem location, complex systems with multiple components, timing analysis and performance analysis.
 <div align=center>
 <img src="https://github.com/wuxx/nanoDLA/blob/master/doc/nanoDLA.jpg" width = "700" alt="" align=center />
+<img src="https://github.com/wuxx/nanoDLA/blob/master/doc/nanoDLA-TYPE-C.jpg" width = "450" alt="" align=cente
 </div>
 
 
@@ -53,6 +55,10 @@ Configure channels and sampling rate, the click “Run” button in the top left
 ## Protocol Decode
 After signals are sampled, you can use decoder to decode them. Let’s take UART sampled data as an example. Click the decoder menu and select UART protocol, then configure UART parameters such as channels, baud rate, data bits, parity type. Afterwards, the data sampled will be decoded.
 ![pulseview_decode](https://github.com/wuxx/nanoDLA/blob/master/doc/pulseview_decode.png)
+
+
+# How To Buy
+you can buy nanoDLA from our offcial aliexpress shop [Muse Lab Factory Store](https://muselab-tech.aliexpress.com/)
 
 
 # FAQ
