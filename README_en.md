@@ -9,17 +9,17 @@
 * [How to Buy](#how-to-buy)
 * [FAQ](#faq)
 # nanoDLA Introduction
-nanoDLA is a hardware and software open source logic analyzer developed and produced by Muse Lab. It is exquisite and compact in appearance with rich functions. It supports up to 24Mhz sampling rate and more than 100 kinds of protocol analysis. 8 channels can sample data simultaneously. Efficiency could be greatly improved in scenarios such as problem location, complex systems with multiple components, timing analysis and performance analysis.
+nanoDLA is a hardware and software open source logic analyzer developed and produced by Muse Lab. It is exquisite and compact in appearance with rich functions. It supports up to 24Mhz sampling rate and more than 100 kinds of protocol analysis. 8 channels can sample data simultaneously. Efficiency could be greatly improved in scenarios such as problem location, complex systems with multiple components, timing analysis and performance analysis. currently there are two version with same function (USB-A version & TYPE-C version)  
 <div align=center>
 <img src="https://github.com/wuxx/nanoDLA/blob/master/doc/nanoDLA.jpg" width = "700" alt="" align=center />
-<img src="https://github.com/wuxx/nanoDLA/blob/master/doc/nanoDLA-TYPE-C.jpg" width = "450" alt="" align=cente
+<img src="https://github.com/wuxx/nanoDLA/blob/master/doc/nanoDLA-TYPE-C.jpg" width = "450" alt="" align=center />
 </div>
 
 
 # Features
 - Open source software
-1.provide source code to compile firmware by yourself
-2.use open source PulseView as PC software to analyze sampling data, which is rich in functions and easy to use, supports more than 100 kinds of protocol analysis
+- provide source code to compile firmware by yourself
+- use open source PulseView as PC software to analyze sampling data, which is rich in functions and easy to use, supports more than 100 kinds of protocol analysis
 - Support up to 24Mhz sampling rate and 8 channels can sample data simultaneously
 - Support input logic level [-0.5v,5.25v]. low level is [-0.5v, 0.8v], high level is[2v, 5.25v]
 - Support operating system like Windows, Linux, Mac, Android
